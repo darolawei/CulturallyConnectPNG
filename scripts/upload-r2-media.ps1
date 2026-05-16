@@ -31,13 +31,15 @@ if ($files.Count -eq 0) {
 }
 
 foreach ($file in $files) {
-  $relativePath = [System.IO.Path]::GetRelativePath($root, $file.FullName)
+  $rootPrefix = $root.Path.TrimEnd("\") + "\"
+  $relativePath = $file.FullName.Substring($rootPrefix.Length)
   $objectKey = $relativePath.Replace("\", "/")
   $objectPath = "$Bucket/$objectKey"
 
   Write-Host "Uploading $objectKey"
 
   & npx --yes wrangler r2 object put $objectPath `
+    --remote `
     --file $file.FullName `
     --content-type "video/mp4" `
     --cache-control "public, max-age=31536000, immutable"
