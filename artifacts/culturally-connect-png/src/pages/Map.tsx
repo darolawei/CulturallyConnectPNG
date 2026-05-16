@@ -97,7 +97,7 @@ export default function MapPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="w-full min-h-[520px] sm:min-h-0"
+              className="w-full min-h-[360px] sm:min-h-0"
               style={{ aspectRatio: "1000 / 720" }}
             >
               <SvgMap provinces={countryProvinces} mapData={activeMapData} mapTitle={mapTitle} />
