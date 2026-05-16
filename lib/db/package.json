@@ -10,6 +10,7 @@
   "scripts": {
     "push": "drizzle-kit push --config ./drizzle.config.ts && pnpm run seed",
     "push-force": "drizzle-kit push --force --config ./drizzle.config.ts && pnpm run seed",
+    "setup": "tsx ./src/setup.ts",
     "seed": "tsx ./src/seed.ts",
     "import:culture": "tsx ./src/cultural-import.ts"
   },
