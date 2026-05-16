@@ -1,0 +1,77 @@
+﻿@startuml
+class Province {
+  +id: string
+  +name: string
+  +capital: string
+  +region: string
+  +population: int
+  +area: float
+  +languages: string[]
+  +flagColor: string
+  +description: string
+}
+
+class Story {
+  +id: string
+  +provinceId: string
+  +title: string
+  +content: string
+  +elderName: string
+  +recordedAt: datetime
+  +language: string
+  +tags: string[]
+  +status: ModerationStatus
+}
+
+class Herb {
+  +id: string
+  +provinceId: string
+  +name: string
+  +localName: string
+  +description: string
+  +uses: string[]
+  +preparation: string
+  +warnings: string
+  +status: ModerationStatus
+}
+
+class Village {
+  +id: string
+  +provinceId: string
+  +name: string
+  +clanOrigin: string
+  +foundingStory: string
+  +location: string
+  +languages: string[]
+  +traditions: string[]
+  +status: ModerationStatus
+}
+
+class User {
+  +id: string
+  +email: string
+  +displayName: string
+  +role: UserRole
+}
+
+enum UserRole {
+  contributor
+  reviewer
+  admin
+}
+
+enum ModerationStatus {
+  draft
+  pending
+  approved
+  rejected
+}
+
+Province "1" -- "0..*" Story
+Province "1" -- "0..*" Herb
+Province "1" -- "0..*" Village
+
+User "1" -- "0..*" Story : createdBy
+User "1" -- "0..*" Herb : createdBy
+User "1" -- "0..*" Village : createdBy
+@enduml

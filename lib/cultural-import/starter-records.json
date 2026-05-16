@@ -1,0 +1,146 @@
+{
+  "batchId": "starter-public-sources-2026-05",
+  "stories": [
+    {
+      "id": "src-png-culture-overview",
+      "provinceId": "national-capital",
+      "title": "PNG cultural diversity overview",
+      "content": "Papua New Guinea has very high cultural and linguistic diversity. Public cultural descriptions commonly note village life, clan and family obligations, gardening, exchange ceremonies, rituals, creative expression, music, dance, carving, pottery, basketwork and cultural festivals. This record is a source note, not a community-owned tumbuna story.",
+      "elderName": "PNG High Commission public culture page",
+      "language": "English",
+      "tags": ["source-note", "culture-overview", "public"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "Culture - High Commission of the Independent State of Papua New Guinea",
+        "sourceUrl": "https://pngcanberra.org/culture/",
+        "sourceAuthor": "PNG High Commission Canberra",
+        "license": "Public webpage; verify reuse terms before republication",
+        "rightsStatus": "unknown",
+        "culturalSensitivity": "public"
+      }
+    },
+    {
+      "id": "src-png-tourism-culture-overview",
+      "provinceId": "national-capital",
+      "title": "PNG cultural tours and festival overview",
+      "content": "Papua New Guinea tourism material describes continuing cultural practice across remote villages and urban centres, including singsing, ceremonial dress, mumu cooking, cultural festivals, markets, art and artefacts. This record is a source note for reviewer verification.",
+      "elderName": "Papua New Guinea Tourism Promotion Authority",
+      "language": "English",
+      "tags": ["source-note", "festivals", "tourism", "public"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "Culture | Papua New Guinea",
+        "sourceUrl": "https://papuanewguinea.travel/cultural-tours/",
+        "sourceAuthor": "Papua New Guinea Tourism Promotion Authority",
+        "license": "Public webpage; verify reuse terms before republication",
+        "rightsStatus": "unknown",
+        "culturalSensitivity": "public"
+      }
+    }
+  ],
+  "herbs": [],
+  "villages": [
+    {
+      "id": "src-central-language-note",
+      "provinceId": "central",
+      "name": "Central Province language source note",
+      "clanOrigin": "Public language reference",
+      "foundingStory": "SIL's Languages of Papua New Guinea site provides province-level language references and maps. This record is a source note for language metadata and should not be treated as a village origin story.",
+      "languages": ["Koiari", "Motu", "Hiri Motu", "Tok Pisin"],
+      "traditions": ["language-reference"],
+      "tags": ["source-note", "languages"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "Languages by Province | Languages of Papua New Guinea",
+        "sourceUrl": "https://pnglanguages.sil.org/resources/provinces",
+        "sourceAuthor": "SIL Papua New Guinea",
+        "license": "Public reference; verify reuse terms before republication",
+        "rightsStatus": "unknown",
+        "culturalSensitivity": "public"
+      }
+    }
+  ],
+  "songs": [
+    {
+      "id": "src-pari-traditional-songs-anu",
+      "provinceId": "central",
+      "title": "Pari traditional songs archive record",
+      "description": "ANU Archives lists a 1979 audio recording item titled 'Pari traditional songs'. The archive page states the recording is for research purposes only and must not be reproduced without prior permission. This database record stores the existence and source of the item only, not the audio or lyrics.",
+      "performer": "Guba Nou, Tau Legu, Vabukori Tau, Matagu Kevau",
+      "language": "Not specified in source record",
+      "tags": ["song", "archive-reference", "permission-required"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "Pari traditional songs",
+        "sourceUrl": "https://openresearch-repository.anu.edu.au/entities/anuarchivesitem/446f5619-e50e-4dc0-ab68-be2f3027df35",
+        "sourceAuthor": "Australian National University Archives",
+        "license": "Research purposes only; permission required for reproduction",
+        "rightsStatus": "permission_required",
+        "culturalSensitivity": "restricted"
+      }
+    }
+  ],
+  "festivals": [
+    {
+      "id": "src-enga-cultural-show",
+      "provinceId": "enga",
+      "name": "Enga Cultural Show",
+      "month": "August",
+      "description": "Experience Enga describes the Enga Cultural Show in Wabag as an annual gathering where groups from across Enga Province showcase traditional culture through dance, rituals, crafts, skills demonstrations and singsing.",
+      "location": "Wabag",
+      "tags": ["festival", "singsing", "public"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "Enga Cultural Show",
+        "sourceUrl": "https://www.experienceenga.com/cultural-show",
+        "sourceAuthor": "Experience Enga",
+        "license": "Public webpage; verify reuse terms before republication",
+        "rightsStatus": "unknown",
+        "culturalSensitivity": "public"
+      }
+    },
+    {
+      "id": "src-simbu-cultural-festival",
+      "provinceId": "chimbu",
+      "name": "Simbu and Central Highlands Festival",
+      "month": "Not specified in starter source",
+      "description": "The Simbu Festival source describes participating groups from districts of the province and neighbouring provinces presenting traditional dance, dress and cultural heritage.",
+      "location": "Simbu Province",
+      "tags": ["festival", "singsing", "public"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "The Simbu & Central Highlands Festival",
+        "sourceUrl": "https://simbufestival.com/",
+        "sourceAuthor": "Simbu Festival",
+        "license": "Public webpage; verify reuse terms before republication",
+        "rightsStatus": "unknown",
+        "culturalSensitivity": "public"
+      }
+    },
+    {
+      "id": "src-hiri-moale-overview",
+      "provinceId": "national-capital",
+      "name": "Hiri Moale",
+      "month": "September",
+      "description": "The PNG High Commission culture page names Hiri Moale, held in Port Moresby every September, among PNG's popular cultural festivals.",
+      "location": "Port Moresby",
+      "tags": ["festival", "public"],
+      "status": "pending",
+      "importBatchId": "starter-public-sources-2026-05",
+      "source": {
+        "sourceTitle": "Culture - High Commission of the Independent State of Papua New Guinea",
+        "sourceUrl": "https://pngcanberra.org/culture/",
+        "sourceAuthor": "PNG High Commission Canberra",
+        "license": "Public webpage; verify reuse terms before republication",
+        "rightsStatus": "unknown",
+        "culturalSensitivity": "public"
+      }
+    }
+  ]
+}

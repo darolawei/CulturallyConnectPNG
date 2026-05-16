@@ -1,0 +1,27 @@
+{
+  "name": "Culturally Connect PNG",
+  "short_name": "Connect PNG",
+  "description": "A digital cultural vault for Papua New Guinea's 22 provinces — preserving oral histories, traditional medicine, and village origins.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a0a00",
+  "theme_color": "#1a0a00",
+  "orientation": "portrait-primary",
+  "categories": ["education", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "lang": "en-PG"
+}

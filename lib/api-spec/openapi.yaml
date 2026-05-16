@@ -1,0 +1,668 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Culturally Connect PNG API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: openai
+    description: OpenAI AI chat, image, and audio operations
+  - name: provinces
+    description: Province operations
+  - name: stories
+    description: Tubuna oral history stories
+  - name: herbs
+    description: Traditional herbs and medicine
+  - name: villages
+    description: Village origins and ethnography
+paths:
+  /openai/conversations:
+    get:
+      operationId: listOpenaiConversations
+      tags: [openai]
+      summary: List all conversations
+      responses:
+        "200":
+          description: List of conversations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OpenaiConversation"
+    post:
+      operationId: createOpenaiConversation
+      tags: [openai]
+      summary: Create a new conversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOpenaiConversationBody"
+      responses:
+        "201":
+          description: Created conversation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpenaiConversation"
+  /openai/conversations/{id}:
+    get:
+      operationId: getOpenaiConversation
+      tags: [openai]
+      summary: Get conversation with messages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Conversation with messages
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpenaiConversationWithMessages"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpenaiError"
+  /openai/conversations/{id}/messages:
+    get:
+      operationId: listOpenaiMessages
+      tags: [openai]
+      summary: List messages in a conversation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OpenaiMessage"
+    post:
+      operationId: sendOpenaiMessage
+      tags: [openai]
+      summary: Send a text message and receive a streaming text response
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendOpenaiMessageBody"
+      responses:
+        "200":
+          description: SSE stream of assistant text chunks
+          content:
+            text/event-stream: {}
+  /openai/transcribe:
+    post:
+      operationId: transcribeAudio
+      tags: [openai]
+      summary: Transcribe audio recording for Tok-Stori
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TranscribeAudioBody"
+      responses:
+        "200":
+          description: Transcription result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TranscribeAudioResponse"
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /provinces:
+    get:
+      operationId: getProvinces
+      tags: [provinces]
+      summary: Get all provinces
+      responses:
+        "200":
+          description: List of provinces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Province"
+  /provinces/{id}:
+    get:
+      operationId: getProvince
+      tags: [provinces]
+      summary: Get a province by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Province details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Province"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stories:
+    get:
+      operationId: getStories
+      tags: [stories]
+      summary: Get all oral history stories
+      parameters:
+        - name: provinceId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of stories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Story"
+    post:
+      operationId: createStory
+      tags: [stories]
+      summary: Create a new oral history story
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStoryInput"
+      responses:
+        "201":
+          description: Created story
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+  /stories/{id}:
+    get:
+      operationId: getStory
+      tags: [stories]
+      summary: Get a story by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Story details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+  /herbs:
+    get:
+      operationId: getHerbs
+      tags: [herbs]
+      summary: Get all traditional herbs and medicines
+      parameters:
+        - name: provinceId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of herbs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Herb"
+    post:
+      operationId: createHerb
+      tags: [herbs]
+      summary: Create a new herb entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateHerbInput"
+      responses:
+        "201":
+          description: Created herb
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Herb"
+  /villages:
+    get:
+      operationId: getVillages
+      tags: [villages]
+      summary: Get all village origins
+      parameters:
+        - name: provinceId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of villages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Village"
+    post:
+      operationId: createVillage
+      tags: [villages]
+      summary: Create a new village origin entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVillageInput"
+      responses:
+        "201":
+          description: Created village
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Village"
+  /provinces/{id}/summary:
+    get:
+      operationId: getProvinceSummary
+      tags: [provinces]
+      summary: Get province cultural summary stats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Province cultural summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProvinceSummary"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    Province:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        capital:
+          type: string
+        region:
+          type: string
+        population:
+          type: integer
+        area:
+          type: number
+        languages:
+          type: array
+          items:
+            type: string
+        flagColor:
+          type: string
+        description:
+          type: string
+        danceStyle:
+          type: string
+        imageUrl:
+          type: string
+      required:
+        - id
+        - name
+        - capital
+        - region
+    Story:
+      type: object
+      properties:
+        id:
+          type: string
+        provinceId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        elderName:
+          type: string
+        recordedAt:
+          type: string
+          format: date-time
+        audioUrl:
+          type: string
+        language:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - provinceId
+        - title
+        - content
+        - elderName
+        - recordedAt
+    Herb:
+      type: object
+      properties:
+        id:
+          type: string
+        provinceId:
+          type: string
+        name:
+          type: string
+        localName:
+          type: string
+        description:
+          type: string
+        uses:
+          type: array
+          items:
+            type: string
+        preparation:
+          type: string
+        warnings:
+          type: string
+        imageUrl:
+          type: string
+      required:
+        - id
+        - provinceId
+        - name
+        - localName
+        - description
+        - uses
+    Village:
+      type: object
+      properties:
+        id:
+          type: string
+        provinceId:
+          type: string
+        name:
+          type: string
+        clanOrigin:
+          type: string
+        foundingStory:
+          type: string
+        location:
+          type: string
+        population:
+          type: integer
+        languages:
+          type: array
+          items:
+            type: string
+        traditions:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - provinceId
+        - name
+        - clanOrigin
+        - foundingStory
+    ProvinceSummary:
+      type: object
+      properties:
+        provinceId:
+          type: string
+        provinceName:
+          type: string
+        storyCount:
+          type: integer
+        herbCount:
+          type: integer
+        villageCount:
+          type: integer
+        recentStories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Story"
+      required:
+        - provinceId
+        - provinceName
+        - storyCount
+        - herbCount
+        - villageCount
+        - recentStories
+    CreateStoryInput:
+      type: object
+      properties:
+        provinceId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        elderName:
+          type: string
+        audioUrl:
+          type: string
+        language:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - provinceId
+        - title
+        - content
+        - elderName
+    CreateHerbInput:
+      type: object
+      properties:
+        provinceId:
+          type: string
+        name:
+          type: string
+        localName:
+          type: string
+        description:
+          type: string
+        uses:
+          type: array
+          items:
+            type: string
+        preparation:
+          type: string
+        warnings:
+          type: string
+        imageUrl:
+          type: string
+      required:
+        - provinceId
+        - name
+        - localName
+        - description
+        - uses
+    CreateVillageInput:
+      type: object
+      properties:
+        provinceId:
+          type: string
+        name:
+          type: string
+        clanOrigin:
+          type: string
+        foundingStory:
+          type: string
+        location:
+          type: string
+        population:
+          type: integer
+        languages:
+          type: array
+          items:
+            type: string
+        traditions:
+          type: array
+          items:
+            type: string
+      required:
+        - provinceId
+        - name
+        - clanOrigin
+        - foundingStory
+    OpenaiConversation:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - createdAt
+    OpenaiMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+        conversationId:
+          type: integer
+        role:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - conversationId
+        - role
+        - content
+        - createdAt
+    OpenaiConversationWithMessages:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/OpenaiMessage"
+      required:
+        - id
+        - title
+        - createdAt
+        - messages
+    CreateOpenaiConversationBody:
+      type: object
+      properties:
+        title:
+          type: string
+      required:
+        - title
+    SendOpenaiMessageBody:
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+        - content
+    TranscribeAudioBody:
+      type: object
+      properties:
+        audio:
+          type: string
+          description: Base64-encoded audio data
+        mimeType:
+          type: string
+          description: MIME type of the audio
+      required:
+        - audio
+    TranscribeAudioResponse:
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+        - text
+    OpenaiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

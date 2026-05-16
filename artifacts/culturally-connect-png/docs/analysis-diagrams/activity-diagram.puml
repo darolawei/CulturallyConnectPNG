@@ -1,0 +1,28 @@
+﻿@startuml
+start
+:Open Province Dashboard;
+:Go to "Tubuna Stories";
+:Click "Record Story";
+:Enter title, elder name,\ncontent, language, tags;
+:Submit story;
+:API validates input;
+
+if (Valid?) then (Yes)
+  :Save story with status = pending;
+  :Return success message;
+  :Show in pending queue for reviewer;
+  :Reviewer opens pending list;
+  if (Meets quality/cultural rules?) then (Yes)
+    :Approve story;
+    :Set status = approved;
+    :Story visible to public;
+  else (No)
+    :Reject story;
+    :Set status = rejected;
+  endif
+else (No)
+  :Return validation error;
+  :Show form errors;
+endif
+stop
+@enduml

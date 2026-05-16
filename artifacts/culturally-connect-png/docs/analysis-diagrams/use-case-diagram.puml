@@ -1,0 +1,47 @@
+﻿@startuml
+left to right direction
+actor Visitor
+actor Contributor
+actor Reviewer
+actor Admin
+
+rectangle "Culturally Connect PNG" {
+  usecase "View PNG Map" as UC1
+  usecase "Open Province Dashboard" as UC2
+  usecase "Browse Stories" as UC3
+  usecase "Browse Herbs" as UC4
+  usecase "Browse Villages" as UC5
+  usecase "Browse Festivals" as UC6
+
+  usecase "Submit Story" as UC7
+  usecase "Submit Herb" as UC8
+  usecase "Submit Village" as UC9
+
+  usecase "Review Pending Content" as UC10
+  usecase "Approve/Reject Content" as UC11
+
+  usecase "Manage Province Media\n(flag/video)" as UC12
+}
+
+Visitor --> UC1
+Visitor --> UC2
+Visitor --> UC3
+Visitor --> UC4
+Visitor --> UC5
+Visitor --> UC6
+
+Contributor --> UC7
+Contributor --> UC8
+Contributor --> UC9
+
+Reviewer --> UC10
+Reviewer --> UC11
+
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+
+UC7 .> UC10 : <<include>>
+UC8 .> UC10 : <<include>>
+UC9 .> UC10 : <<include>>
+@enduml

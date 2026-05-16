@@ -1,0 +1,34 @@
+﻿@startuml
+actor User
+participant "Frontend (Province Page)" as FE
+participant "API Server" as API
+database "PostgreSQL" as DB
+
+User -> FE: Open /province/{id}
+FE -> API: GET /api/provinces/{id}
+API -> DB: Select province by id
+DB --> API: Province row
+API --> FE: Province JSON
+
+FE -> API: GET /api/provinces/{id}/summary
+API -> DB: Count stories/herbs/villages\n(+pending counts)
+DB --> API: Summary
+API --> FE: Summary JSON
+
+FE -> API: GET /api/stories?provinceId={id}
+API -> DB: Select approved stories
+DB --> API: Story list
+API --> FE: Stories JSON
+
+FE -> API: GET /api/herbs?provinceId={id}
+API -> DB: Select approved herbs
+DB --> API: Herb list
+API --> FE: Herbs JSON
+
+FE -> API: GET /api/villages?provinceId={id}
+API -> DB: Select approved villages
+DB --> API: Village list
+API --> FE: Villages JSON
+
+FE --> User: Render dashboard tabs + media
+@enduml

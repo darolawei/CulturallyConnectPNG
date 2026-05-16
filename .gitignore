@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+*.log
+.idea/
+.replit-artifact/
+*.tsbuildinfo
+prod-public.err.log
+tunnel.err.log
+
+# Keep production media small. The app uses dance-short.mp4 plus selected images/videos.
+artifacts/culturally-connect-png/public/media/provinces/**/dance.mp4
+artifacts/culturally-connect-png/public/media/provinces/**/*.mp4
+tools/
