@@ -371,7 +371,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
   const [danceMediaReady, setDanceMediaReady] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [gifFailed, setGifFailed] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
     if (injected.current) return;
@@ -390,7 +390,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
     setDanceMediaReady(false);
     setShouldLoadVideo(false);
     setGifFailed(false);
-    setSoundEnabled(false);
+    setSoundEnabled(true);
     setMediaPhase("video");
     setGalleryIndex(0);
   }, [provinceId]);
