@@ -84,13 +84,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <div>
               <p className="font-semibold text-foreground mb-2 font-serif">Data & Design</p>
-              <p>Rallyian Salon (Analysis)</p>
-              <p>Abbigallie Pokolau (UI/UX)</p>
+              <p>Rallyanne SALO (Analysis)</p>
+              <p>Abbigail PKIENGOU (UI/UX)</p>
             </div>
             <div>
               <p className="font-semibold text-foreground mb-2 font-serif">Business & Sustainability</p>
               <p>Kalama Mago</p>
-              <p>Meggie Giror</p>
+              <p>Maggie GIRORO</p>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-white/5 text-xs text-muted-foreground/50">
