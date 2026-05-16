@@ -92,7 +92,6 @@ const KEYFRAMES = `
 
 type DanceType = "highlands" | "islands" | "sepik" | "southern";
 
-const VIDEO_PHASE_MS = 30000;
 const FLAG_IMAGE_PHASE_MS = 10000;
 
 function getDanceType(provinceId: string): DanceType {
@@ -372,7 +371,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
   const [danceMediaReady, setDanceMediaReady] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [gifFailed, setGifFailed] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
     if (injected.current) return;
@@ -391,7 +390,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
     setDanceMediaReady(false);
     setShouldLoadVideo(false);
     setGifFailed(false);
-    setSoundEnabled(true);
+    setSoundEnabled(false);
     setMediaPhase("video");
     setGalleryIndex(0);
   }, [provinceId]);
@@ -400,27 +399,6 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
     const timer = window.setTimeout(() => setShouldLoadVideo(true), 900);
     return () => window.clearTimeout(timer);
   }, [provinceId]);
-
-  useEffect(() => {
-    if (!danceMediaReady || videoFailed) return;
-    const flagImageCount = Math.max(1, media.galleryImages?.length ?? 0);
-    const phaseDuration = mediaPhase === "video" ? VIDEO_PHASE_MS : FLAG_IMAGE_PHASE_MS * flagImageCount;
-
-    const timer = window.setTimeout(
-      () => {
-        setMediaPhase((phase) => {
-          if (phase === "video") {
-            setGalleryIndex(0);
-            return "flag";
-          }
-          return "video";
-        });
-      },
-      phaseDuration,
-    );
-
-    return () => window.clearTimeout(timer);
-  }, [danceMediaReady, media.galleryImages?.length, mediaPhase, videoFailed, provinceId]);
 
   useEffect(() => {
     if (!media.galleryImages?.length || mediaPhase !== "flag") return;
@@ -438,16 +416,8 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
     const video = videoRef.current;
     if (!video || !danceMediaReady || videoFailed) return;
 
-    if (mediaPhase === "flag") {
-      video.pause();
-      return;
-    }
-
     video.muted = !soundEnabled;
     video.volume = soundEnabled ? 0.72 : 0;
-    if (video.currentTime < 2 || video.currentTime >= 32 || video.currentTime >= video.duration - 0.2) {
-      video.currentTime = Math.min(2, Math.max(0, video.duration - 1));
-    }
 
     void video.play().catch(() => {
       video.muted = true;
@@ -618,14 +588,14 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
             animation: "province-media-in 900ms ease-out both",
             transition: "opacity 900ms ease, filter 900ms ease",
           }}
+          loop
           autoPlay
           muted={!soundEnabled}
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-label={provinceName ? `${provinceName} traditional dance background` : "Traditional dance background"}
           onLoadedMetadata={(event) => {
             const video = event.currentTarget;
-            video.currentTime = Math.min(2, Math.max(0, video.duration - 1));
             video.muted = !soundEnabled;
             video.volume = soundEnabled ? 0.72 : 0;
             setDanceMediaReady(true);
@@ -639,18 +609,14 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
           onCanPlay={() => setDanceMediaReady(true)}
           onTimeUpdate={(event) => {
             const video = event.currentTarget;
-            if (mediaPhase === "flag" && !video.paused) {
-              video.pause();
-              return;
-            }
-            if (mediaPhase === "video" && video.paused) {
+            if (video.paused) {
               void video.play().catch(() => setSoundEnabled(false));
             }
-            if (video.currentTime >= 32 || video.currentTime >= video.duration - 0.2) {
-              video.currentTime = 2;
-              setGalleryIndex(0);
-              setMediaPhase("flag");
-            }
+          }}
+          onEnded={(event) => {
+            const video = event.currentTarget;
+            video.currentTime = 0;
+            void video.play().catch(() => setSoundEnabled(false));
           }}
           onError={() => {
             if (!shortVideoFailed) {
