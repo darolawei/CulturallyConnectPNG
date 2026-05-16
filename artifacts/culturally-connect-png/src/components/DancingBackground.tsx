@@ -563,7 +563,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
           className="absolute inset-0 h-full w-full object-cover"
           style={{
             opacity: danceMediaReady && !videoFailed ? 0 : 0.36,
-            objectPosition: "center bottom",
+            objectPosition: "center center",
             filter: "saturate(1.05) contrast(1.02) brightness(0.92)",
             animation: "province-media-in 500ms ease-out both",
             transition: "opacity 500ms ease",
@@ -583,7 +583,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
           className="absolute inset-0 h-full w-full object-cover"
           style={{
             opacity: danceMediaReady && mediaPhase === "video" ? 0.72 : 0.08,
-            objectPosition: "center bottom",
+            objectPosition: "center center",
             filter: "saturate(1.08) contrast(1.03) brightness(0.9)",
             animation: "province-media-in 900ms ease-out both",
             transition: "opacity 900ms ease, filter 900ms ease",
@@ -642,7 +642,7 @@ export function DancingBackground({ provinceId, color = "#C97000", provinceName 
           className="absolute inset-0 h-full w-full object-cover"
           style={{
             opacity: danceMediaReady ? 0.42 : 0,
-            objectPosition: "center bottom",
+            objectPosition: "center center",
             filter: "saturate(1.05) contrast(1.02) brightness(0.9)",
             animation: "province-media-in 900ms ease-out both",
           }}

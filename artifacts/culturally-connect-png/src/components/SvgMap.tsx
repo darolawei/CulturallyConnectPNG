@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
+import { Minus, Plus, RotateCcw } from "lucide-react";
 import { getProvinceMedia } from "@/data/province-media";
 
 interface ProvincePath {
@@ -26,6 +27,7 @@ const FALLBACK_COLOR = "#5C3D2E";
 export default function SvgMap({ provinces, mapData, mapTitle }: SvgMapProps) {
   const [, setLocation] = useLocation();
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(1);
 
   const provinceById = useMemo(() => {
     const map = new Map<string, any>();
@@ -43,7 +45,47 @@ export default function SvgMap({ provinces, mapData, mapTitle }: SvgMapProps) {
     : null;
 
   return (
-    <div className="w-full h-full relative">
+    <div className="relative h-full w-full">
+      <div className="absolute right-3 top-3 z-50 flex items-center gap-1 rounded-lg border border-white/10 bg-black/55 p-1 text-white shadow-xl backdrop-blur-md sm:right-4 sm:top-4">
+        <button
+          type="button"
+          onClick={() => setZoom((value) => Math.min(2.8, Number((value + 0.25).toFixed(2))))}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-white/12"
+          aria-label="Zoom in"
+          title="Zoom in"
+        >
+          <Plus className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setZoom((value) => Math.max(1, Number((value - 0.25).toFixed(2))))}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-white/12"
+          aria-label="Zoom out"
+          title="Zoom out"
+        >
+          <Minus className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setZoom(1)}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-white/12"
+          aria-label="Reset zoom"
+          title="Reset zoom"
+        >
+          <RotateCcw className="h-4 w-4" />
+        </button>
+      </div>
+
+      <div className="h-full w-full overflow-auto overscroll-contain rounded-lg touch-pan-x touch-pan-y">
+        <div
+          className="h-full min-h-[420px] w-full min-w-[760px] origin-center sm:min-w-0"
+          style={{
+            transform: `scale(${zoom})`,
+            transformOrigin: "center center",
+            width: `${zoom * 100}%`,
+            height: `${zoom * 100}%`,
+          }}
+        >
       <svg
         viewBox={`0 0 ${mapData.width} ${mapData.height}`}
         className="w-full h-full"
@@ -168,6 +210,8 @@ export default function SvgMap({ provinces, mapData, mapTitle }: SvgMapProps) {
           );
         })}
       </svg>
+        </div>
+      </div>
 
       {hoveredId && (
         <motion.div
@@ -199,7 +243,7 @@ export default function SvgMap({ provinces, mapData, mapTitle }: SvgMapProps) {
         </motion.div>
       )}
 
-      <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-md border border-white/10 rounded-lg px-3 py-2 text-xs text-muted-foreground pointer-events-none">
+      <div className="absolute left-3 top-3 bg-black/55 backdrop-blur-md border border-white/10 rounded-lg px-3 py-2 text-xs text-muted-foreground pointer-events-none sm:left-4 sm:top-4">
         <div className="font-serif text-primary font-bold text-sm">{mapTitle}</div>
         <div className="text-[10px] mt-0.5">{paths.length} provinces · click to explore</div>
       </div>
