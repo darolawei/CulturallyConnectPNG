@@ -4,6 +4,7 @@ This deployment uses:
 
 - Neon for PostgreSQL
 - Render for the live web service
+- Cloudflare R2 for production video files
 - One public URL for both the React app and `/api/*`
 
 ## 1. Create The Database
@@ -37,6 +38,7 @@ The `.gitignore` keeps the old long raw videos out of the online build. Keep the
 ```text
 DATABASE_URL=your_neon_connection_string
 GEMINI_API_KEY=your_gemini_key
+VITE_MEDIA_BASE_URL=your_r2_public_base_url
 ```
 
 The blueprint already sets:
@@ -45,6 +47,37 @@ The blueprint already sets:
 AI_PROVIDER=gemini
 GEMINI_MODEL=gemini-2.5-flash
 PORT=10000
+```
+
+## 3a. Upload Videos To Cloudflare R2
+
+Create an R2 bucket, enable public access or connect a custom domain, then upload
+the local MP4 files:
+
+```powershell
+.\scripts\upload-r2-media.ps1 -Bucket culturally-connect-png-media
+```
+
+By default this uploads the production videos referenced by the app:
+`dance-short.mp4` files plus the National Capital video. To upload every local
+MP4, add `-IncludeAllMp4`.
+
+The upload preserves paths like:
+
+```text
+media/provinces/chimbu/dance-short.mp4
+```
+
+If your public bucket URL is:
+
+```text
+https://media.example.com
+```
+
+then set this in Render:
+
+```text
+VITE_MEDIA_BASE_URL=https://media.example.com
 ```
 
 ## 4. Build Behavior

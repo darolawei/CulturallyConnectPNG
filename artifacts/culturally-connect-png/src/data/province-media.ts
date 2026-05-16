@@ -9,7 +9,10 @@ export interface ProvinceMedia {
   flagPattern: FlagPattern;
 }
 
-const mediaRoot = "/media/provinces";
+const configuredMediaBaseUrl = import.meta.env.VITE_MEDIA_BASE_URL?.replace(/\/+$/, "");
+const mediaRoot = configuredMediaBaseUrl
+  ? `${configuredMediaBaseUrl}/media/provinces`
+  : "/media/provinces";
 const flagRoot = "/media/province-flags";
 
 function media(
