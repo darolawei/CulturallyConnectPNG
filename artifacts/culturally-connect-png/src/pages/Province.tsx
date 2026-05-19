@@ -26,6 +26,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { TumbunaMan } from "@/components/TumbunaMan";
 import { DancingBackground } from "@/components/DancingBackground";
+import { ProvinceSatelliteMap } from "@/components/ProvinceSatelliteMap";
 import { PROVINCE_FESTIVALS, PROVINCE_DANCE } from "@/data/festivals";
 import { useAuth } from "@/lib/auth";
 
@@ -248,6 +249,14 @@ export default function ProvinceDashboard() {
               </div>
             </div>
           </div>
+
+          {province && (
+            <ProvinceSatelliteMap
+              provinceId={provinceId}
+              provinceName={province.name}
+              accentColor={province.flagColor || "#C97000"}
+            />
+          )}
 
           {/* Navigation Tabs */}
           <div className="flex max-w-full overflow-x-auto hide-scrollbar gap-1.5 mb-7 p-1 bg-black/25 rounded-lg border border-white/10 w-fit">

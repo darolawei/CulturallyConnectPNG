@@ -56,6 +56,19 @@ export function TumbunaMan({ provinceId, provinceName }: TumbunaManProps) {
     setTimeout(() => inputRef.current?.focus(), 100);
   }, [messages.length, provinceName]);
 
+  useEffect(() => {
+    const handleSuggestedQuestion = (event: Event) => {
+      const customEvent = event as CustomEvent<{ question?: string }>;
+      const question = customEvent.detail?.question;
+      if (!question) return;
+      void handleOpen();
+      setInput(question);
+    };
+
+    window.addEventListener("ccpng:ask-tumbuna", handleSuggestedQuestion);
+    return () => window.removeEventListener("ccpng:ask-tumbuna", handleSuggestedQuestion);
+  }, [handleOpen]);
+
   const sendMessage = useCallback(async () => {
     const text = input.trim();
     if (!text || isSending || isStreaming) return;
